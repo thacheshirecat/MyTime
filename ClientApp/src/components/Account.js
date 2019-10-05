@@ -25,7 +25,6 @@ Account.propTypes = {
   currentUser: PropTypes.object,
   MTUverification: PropTypes.number,
   onUserInfoDisplay: PropTypes.func,
-  onUpdateUserInfo: PropTypes.func,
   onAddUser: PropTypes.func,
   onLoginUser: PropTypes.func,
   onResetData: PropTypes.func

@@ -13,7 +13,6 @@ export default class App extends Component {
     super(props);
     this.state = { currentUser: null, MTUverification: 0 };
     this.handleUserInfoDisplay = this.handleUserInfoDisplay.bind(this);
-    this.handleUpdateUserInfo = this.handleUpdateUserInfo.bind(this);
     this.handleLoginUser = this.handleLoginUser.bind(this);
     this.handleResetData = this.handleResetData.bind(this);
   }
@@ -34,25 +33,25 @@ export default class App extends Component {
     this.setState({ currentUser: null});
   }
 
-  handleUpdateUserInfo(user)
+  // handleUpdateUserInfo(user)
+  // {
+  //   let data = JSON.stringify({username: user.userName, password: user.password, email: user.email, userid: user.userId});
+  //   fetch('api/Login/UpdateUser',
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Accept': 'application/json, text/plain',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: data
+  //     }).then(response => response.json())
+  //     .then(newdata => {
+  //     this.setState({ currentUser: newdata });
+  //     });
+  // }
+  handleCreateUser(user)
   {
-    let data = JSON.stringify({username: user.userName, password: user.password, email: user.email, userid: user.userId});
-    fetch('api/Login/UpdateUser',
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain',
-          'Content-Type': 'application/json'
-        },
-        body: data
-      }).then(response => response.json())
-      .then(newdata => {
-      this.setState({ currentUser: newdata });
-      });
-  }
-  handleAddUser(user)
-  {
-    let data = JSON.stringify({username: user.userName, password: user.password, email: user.email, userid: user.userId});
+    let data = JSON.stringify({username: user.userName, password: user.password, email: user.email});
     fetch('api/Login/AddUser',
       {
         method: 'POST',
@@ -64,6 +63,7 @@ export default class App extends Component {
       }).then(response => response.json())
         .then(newdata => {
       console.log(newdata);
+      console.log(newdata.username);
     });
   }
   handleLoginUser(user)
@@ -100,18 +100,19 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route
-          path='/account'
-          render={(props)=>
+        <Route path='/account'
+            render={(props)=>
             <Account
               currentUser={this.state.currentUser}
               MTUverification={this.state.MTUverification}
               onUserInfoDisplay={this.handleUserInfoDisplay}
-              onUpdateUserInfo={this.handleUpdateUserInfo}
               onAddUser={this.handleAddUser}
               onLoginUser={this.handleLoginUser}
               onResetData={this.handleResetData}/>} />
-          <Route path='/createaccount' component={CreateAccount} />
+          <Route path='/createaccount'
+              render={(props)=>
+                <CreateAccount
+                onCreateUser={this.handleCreateUser}/>} />
       </Layout>
     );
   }
