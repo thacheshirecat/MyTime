@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
+
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
-import Login from './components/Login';
+import Account from './components/Account';
+import CreateAccount from './components/CreateAccount';
 
 export default class App extends Component {
   displayName = App.name
@@ -68,7 +68,7 @@ export default class App extends Component {
   }
   handleLoginUser(user)
   {
-    let data = JSON.stringify({username: user.userName, password: user.password, email: user.email, userid: user.userId});
+    let data = JSON.stringify({username: user.userName, password: user.password});
     fetch('api/Login/UserLogin',
       {
         method: 'POST',
@@ -101,9 +101,9 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Home} />
         <Route
-          path='/login'
+          path='/account'
           render={(props)=>
-            <Login
+            <Account
               currentUser={this.state.currentUser}
               MTUverification={this.state.MTUverification}
               onUserInfoDisplay={this.handleUserInfoDisplay}
@@ -111,8 +111,7 @@ export default class App extends Component {
               onAddUser={this.handleAddUser}
               onLoginUser={this.handleLoginUser}
               onResetData={this.handleResetData}/>} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetchdata' component={FetchData} />
+          <Route path='/createaccount' component={CreateAccount} />
       </Layout>
     );
   }
