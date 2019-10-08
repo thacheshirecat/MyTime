@@ -13,7 +13,7 @@ namespace MyTime.Controllers
     [HttpPost("[action]")]
     public IDictionary<string, string> AddUser([FromBody] MTUser data)
     {
-      // MTUser.Save(data.getUserName(), data.getPassword(), data.getEmail());
+      MTUser.Save(data.getUserName(), data.getPassword(), data.getEmail());
       MTUser NewUser =  MTUser.getUserByName(data.getUserName());
       IDictionary<string, string> user = new Dictionary<string, string>();
       user.Add(new KeyValuePair<string, string>("username", NewUser.getUserName()));

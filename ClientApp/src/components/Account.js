@@ -1,17 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Login from './Login';
+import AccountOptions from './AccountOptions';
+import Session from './Session';
 
 export default function Account(props) {
 
-let contents = <Login
-  currentUser={props.currentUser}
-  MTUverification={props.MTUverification}
-  onUserInfoDisplay={props.onUserInfoDisplay}
-  onUpdateUserInfo={props.onUpdateUserInfo}
-  onAddUser={props.onAddUser}
-  onLoginUser={props.onLoginUser}
-  onResetData={props.onResetData}/>;
+let contents = null;
+
+if(props.currentView === "login")
+{
+  contents = <Login
+                currentUser={props.currentUser}
+                onLoginUser={props.onLoginUser}/>;
+}
+if(props.currentView === "accountoptions")
+{
+  contents = <AccountOptions
+                onSessionViewClicked={props.onSessionViewClicked}/>;
+}
+if(props.currentView === "session")
+{
+  contents = <Session/>
+}
 
 return (
   <div>
@@ -23,9 +35,7 @@ return (
 
 Account.propTypes = {
   currentUser: PropTypes.object,
-  MTUverification: PropTypes.number,
-  onUserInfoDisplay: PropTypes.func,
-  onAddUser: PropTypes.func,
+  currentView: PropTypes.string,
   onLoginUser: PropTypes.func,
-  onResetData: PropTypes.func
+  onSessionViewClicked: PropTypes.func
 };

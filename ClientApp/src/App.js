@@ -11,44 +11,16 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { currentUser: null, MTUverification: 0 };
-    this.handleUserInfoDisplay = this.handleUserInfoDisplay.bind(this);
+    this.state = { currentUser: null, MTUverification: 0, currentView: "login" };
     this.handleLoginUser = this.handleLoginUser.bind(this);
-    this.handleResetData = this.handleResetData.bind(this);
+    this.handleSessionView = this.handleSessionView.bind(this);
   }
 
-  handleUserInfoDisplay()
+  handleSessionView()
   {
-    fetch('api/Login/UserData')
-    .then(response => response.json())
-    .then(data => {
-    console.log(data);
-    this.setState({ currentUser: data });
-    console.log(this.state.currentUser);
-    console.log(this.state.currentUser.userName);
-    });
-  }
-  handleResetData()
-  {
-    this.setState({ currentUser: null});
+    this.setState({ currentView: "session" });
   }
 
-  // handleUpdateUserInfo(user)
-  // {
-  //   let data = JSON.stringify({username: user.userName, password: user.password, email: user.email, userid: user.userId});
-  //   fetch('api/Login/UpdateUser',
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json, text/plain',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: data
-  //     }).then(response => response.json())
-  //     .then(newdata => {
-  //     this.setState({ currentUser: newdata });
-  //     });
-  // }
   handleCreateUser(user)
   {
     let data = JSON.stringify({username: user.userName, password: user.password, email: user.email});
@@ -62,8 +34,6 @@ export default class App extends Component {
         body: data
       }).then(response => response.json())
         .then(newdata => {
-      console.log(newdata);
-      console.log(newdata.username);
     });
   }
   handleLoginUser(user)
@@ -90,6 +60,7 @@ export default class App extends Component {
       }
       else
       {
+        this.setState({currentView: "accountoptions"});
         console.log("Login data correct.");
       }
     });
@@ -104,11 +75,9 @@ export default class App extends Component {
             render={(props)=>
             <Account
               currentUser={this.state.currentUser}
-              MTUverification={this.state.MTUverification}
-              onUserInfoDisplay={this.handleUserInfoDisplay}
-              onAddUser={this.handleAddUser}
+              currentView={this.state.currentView}
               onLoginUser={this.handleLoginUser}
-              onResetData={this.handleResetData}/>} />
+              onSessionViewClicked={this.handleSessionView}/>} />
           <Route path='/createaccount'
               render={(props)=>
                 <CreateAccount

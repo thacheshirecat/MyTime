@@ -80,11 +80,6 @@ namespace MyTime.Models
         email = rdr.GetString(3);
       }
       MTUser foundUser = new MTUser(foundUserName, password, email, userId);
-      Console.WriteLine("*************In Model " + foundUserName);
-      Console.WriteLine("*************In Model " + password);
-      Console.WriteLine("*************In Model " + email);
-      Console.WriteLine("*************In Model " + userId);
-      Console.WriteLine("*************In Model " + foundUser.getUserName());
 
       conn.Close();
       if (conn != null)
@@ -136,13 +131,5 @@ namespace MyTime.Models
         return 3;
       }
     }
-
-    // public static MTUser returnMTUserViaLoginInput(string inputMTUserName, string inputPassword)
-    // {
-    //
-    // }
-
   }
-
-
 }
