@@ -45,7 +45,7 @@ export default function Login(props) {
         <label>Password</label><br/>
         <input
           placeholder = 'Password'
-          type = 'text'
+          type = 'password'
           id = 'newPassword'
           ref={(input) => {_passwordLogin = input;}}
           required="required" /><br/>

@@ -12,8 +12,11 @@ namespace MyTime.Models
     private string _username;
     private string _password;
     private string _email;
+    private string _sessionstartdate;
+    private string _normalizedstarttime;
+    private int _sessionstarttime;
     private int _userid;
-
+    //Getters
     public string getUserName()
     {
       return _username;
@@ -26,19 +29,63 @@ namespace MyTime.Models
     {
       return _email;
     }
+    public string getSessionStartDate()
+    {
+      return _sessionstartdate;
+    }
+    public string getNormalizedStartTime()
+    {
+      return _normalizedstarttime;
+    }
+    public int getSessionStartTime()
+    {
+      return _sessionstarttime;
+    }
     public int getUserId()
     {
       return _userid;
     }
-
-    public MTUser(string UserName, string Password, string Email, int UserId)
+    //Setters
+    public void setUserName(string NewUserName)
+    {
+      _username = NewUserName;
+    }
+    public void setPassword(string NewPassword)
+    {
+      _password = NewPassword;
+    }
+    public void setEmail(string NewEmail)
+    {
+      _email = NewEmail;
+    }
+    public void setSessionStartDate(string NewSessionStartDate)
+    {
+      _sessionstartdate = NewSessionStartDate;
+    }
+    public void setNormalizedStartTime(string NewNormalizedStartTime)
+    {
+      _normalizedstarttime = NewNormalizedStartTime;
+    }
+    public void setSessionStartTime(int NewSessionStartTime)
+    {
+      _sessionstarttime = NewSessionStartTime;
+    }
+    public void setUserId(int NewUserId)
+    {
+      _userid = NewUserId;
+    }
+    //Constructor
+    public MTUser(string UserName, string Password, string Email, string SessionStartDate, string NormalizedStartTime, int SessionStartTime, int UserId)
     {
       _username = UserName;
       _password = Password;
       _email = Email;
+      _sessionstartdate = SessionStartDate;
+      _normalizedstarttime = NormalizedStartTime;
+      _sessionstarttime = SessionStartTime;
       _userid = UserId;
     }
-
+    //Methods
     public static void Save(string inputUserName, string inputPassword, string inputEmail)
     {
       MySqlConnection conn = DB.Connection();
@@ -71,6 +118,9 @@ namespace MyTime.Models
       string foundUserName = null;
       string password = null;
       string email = null;
+      string ssd = null;
+      string nsd = null;
+      int sst = 0;
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
       {
@@ -78,8 +128,11 @@ namespace MyTime.Models
         foundUserName = rdr.GetString(1);
         password = rdr.GetString(2);
         email = rdr.GetString(3);
+        ssd = rdr.GetString(4);
+        nsd = rdr.GetString(5);
+        sst = rdr.GetInt32(6);
       }
-      MTUser foundUser = new MTUser(foundUserName, password, email, userId);
+      MTUser foundUser = new MTUser(foundUserName, password, email, ssd, nsd, sst, userId);
 
       conn.Close();
       if (conn != null)
@@ -98,17 +151,13 @@ namespace MyTime.Models
       cmd.CommandText = @"SELECT * FROM users WHERE user_name = (@input);";
       cmd.Parameters.Add(new MySqlParameter("@input", inputUserName));
 
-      int userId = 0;
       string userName = null;
       string password = null;
-      string email = null;
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
       {
-        userId = rdr.GetInt32(0);
         userName = rdr.GetString(1);
         password = rdr.GetString(2);
-        email = rdr.GetString(3);
       }
 
       conn.Close();
@@ -116,8 +165,6 @@ namespace MyTime.Models
       {
         conn.Dispose();
       }
-      Console.WriteLine(userName);
-      Console.WriteLine(password);
       if(userName != inputUserName)
       {
         return 1;

@@ -26,13 +26,13 @@ function createUserClicked()
         <label>Password</label><br/>
         <input
           placeholder = 'Password'
-          type = 'text'
+          type = 'password'
           id = 'Password'
           ref={(input) => {_password = input;}}
           required="required" /><br/>
           <label>Email</label><br/>
           <input
-            placeholder = 'Password'
+            placeholder = 'Email'
             type = 'text'
             id = 'Email'
             ref={(input) => {_email = input;}}

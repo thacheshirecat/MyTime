@@ -20,6 +20,10 @@ export default class App extends Component {
   {
     this.setState({ currentView: "session" });
   }
+  handleRecordsView()
+  {
+    this.setState({ currentView: "records" });
+  }
 
   handleCreateUser(user)
   {
@@ -49,18 +53,16 @@ export default class App extends Component {
         body: data
       }).then(response => response.json())
         .then(newdata => {
-      this.setState({ MTUverification: newdata });
-      if(this.state.MTUverification === 1)
+      this.setState({ currentUser: newdata });
+      if(this.state.currentUser.userid === "0")
       {
-        console.log("No Such Username.");
-      }
-      else if(this.state.MTUverification === 2)
-      {
-        console.log("Correct User Name, Incorrect Password.");
+        console.log(this.state.currentUser.userid);
+        console.log("Incorrect Login Info.");
       }
       else
       {
         this.setState({currentView: "accountoptions"});
+        console.log(this.state.currentUser.userid);
         console.log("Login data correct.");
       }
     });

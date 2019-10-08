@@ -17,7 +17,7 @@ class Clock extends React.Component
   }
 
   count() {
-    this.setState({ currenttime: (Math.floor((new Date().getTime() - this.state.time)/1000)/3600).toFixed(4)});
+    this.setState({ currenttime: (Math.floor((new Date().getTime() - this.state.time)/1000)/3600).toFixed(3)});
   }
 
   render() {

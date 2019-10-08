@@ -23,10 +23,29 @@ namespace MyTime.Controllers
       return user;
     }
     [HttpPost("[action]")]
-    public int UserLogin([FromBody] MTUser data)
+    public IDictionary<string, string> UserLogin([FromBody] MTUser data)
     {
       int verifiedUser = MTUser.verifyUserLogin(data.getUserName(), data.getPassword());
-      return verifiedUser;
+      IDictionary<string, string> user = new Dictionary<string, string>();
+      if(verifiedUser == 3)
+      {
+        MTUser NewUser = MTUser.getUserByName(data.getUserName());
+        user.Add(new KeyValuePair<string, string>("username", NewUser.getUserName()));
+        user.Add(new KeyValuePair<string, string>("password", NewUser.getPassword()));
+        user.Add(new KeyValuePair<string, string>("email", NewUser.getEmail()));
+        user.Add(new KeyValuePair<string, string>("userid", NewUser.getUserId().ToString()));
+      }
+      else
+      {
+        MTUser errorUser = new MTUser("error", "error", "error", "error", "error", 0, 0);
+        user.Add(new KeyValuePair<string, string>("username", errorUser.getUserName()));
+        user.Add(new KeyValuePair<string, string>("password", errorUser.getPassword()));
+        user.Add(new KeyValuePair<string, string>("email", errorUser.getEmail()));
+        user.Add(new KeyValuePair<string, string>("userid", errorUser.getUserId().ToString()));
+      }
+      return user;
+
+
     }
 
   }
