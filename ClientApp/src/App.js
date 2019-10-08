@@ -13,16 +13,12 @@ export default class App extends Component {
     super(props);
     this.state = { currentUser: null, MTUverification: 0, currentView: "login" };
     this.handleLoginUser = this.handleLoginUser.bind(this);
-    this.handleSessionView = this.handleSessionView.bind(this);
+    this.handleChangeView = this.handleChangeView.bind(this);
   }
 
-  handleSessionView()
+  handleChangeView(view)
   {
-    this.setState({ currentView: "session" });
-  }
-  handleRecordsView()
-  {
-    this.setState({ currentView: "records" });
+    this.setState({ currentView: view});
   }
 
   handleCreateUser(user)
@@ -56,17 +52,13 @@ export default class App extends Component {
       this.setState({ currentUser: newdata });
       if(this.state.currentUser.userid === "0")
       {
-        console.log(this.state.currentUser.userid);
-        console.log("Incorrect Login Info.");
+        this.setState({currentView: "login"});
       }
       else
       {
         this.setState({currentView: "accountoptions"});
-        console.log(this.state.currentUser.userid);
-        console.log("Login data correct.");
       }
     });
-
   }
 
   render() {
@@ -79,11 +71,11 @@ export default class App extends Component {
               currentUser={this.state.currentUser}
               currentView={this.state.currentView}
               onLoginUser={this.handleLoginUser}
-              onSessionViewClicked={this.handleSessionView}/>} />
+              onChangeViewClicked={this.handleChangeView}/>} />
           <Route path='/createaccount'
               render={(props)=>
-                <CreateAccount
-                onCreateUser={this.handleCreateUser}/>} />
+              <CreateAccount
+              onCreateUser={this.handleCreateUser}/>} />
       </Layout>
     );
   }

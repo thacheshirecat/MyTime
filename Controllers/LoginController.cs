@@ -44,9 +44,6 @@ namespace MyTime.Controllers
         user.Add(new KeyValuePair<string, string>("userid", errorUser.getUserId().ToString()));
       }
       return user;
-
-
     }
-
   }
 }

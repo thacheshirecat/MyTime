@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function Login(props) {
-
+export default function Login(props)
+{
   let loginMessage = null;
   let _usernameLogin = null;
   let _passwordLogin = null;
@@ -22,13 +22,18 @@ export default function Login(props) {
     );
   }
 
-  if(props.MTUverification === 1 || props.MTUverification === 2)
+  if(props.currentUser != null)
   {
-    loginMessage = errorText();
-  }
-  if(props.MTUverification === 3)
-  {
-    loginMessage = <p>Login Successful!</p>;
+    if(props.currentUser.userid === "0" || props.currentUser.userid === null)
+    {
+      console.log("Error");
+      loginMessage = errorText();
+    }
+    else
+    {
+      console.log("Login Successful!");
+      loginMessage = <p>Login Successful!</p>;
+    }
   }
 
   return (
@@ -61,10 +66,5 @@ export default function Login(props) {
 
 Login.propTypes = {
   currentUser: PropTypes.object,
-  MTUverification: PropTypes.number,
-  onUserInfoDisplay: PropTypes.func,
-  onUpdateUserInfo: PropTypes.func,
-  onAddUser: PropTypes.func,
   onLoginUser: PropTypes.func,
-  onResetData: PropTypes.func
 };

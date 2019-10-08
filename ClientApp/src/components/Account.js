@@ -4,38 +4,45 @@ import PropTypes from 'prop-types';
 import Login from './Login';
 import AccountOptions from './AccountOptions';
 import Session from './Session';
+import Records from './Records';
 
-export default function Account(props) {
-
-let contents = null;
-
-if(props.currentView === "login")
+export default function Account(props)
 {
-  contents = <Login
-                currentUser={props.currentUser}
-                onLoginUser={props.onLoginUser}/>;
-}
-if(props.currentView === "accountoptions")
-{
-  contents = <AccountOptions
-                onSessionViewClicked={props.onSessionViewClicked}/>;
-}
-if(props.currentView === "session")
-{
-  contents = <Session/>
-}
+  let contents = null;
 
-return (
-  <div>
-    <h1>MyTime Account</h1>
-    {contents}
-  </div>
-)
+  if(props.currentView === "login")
+  {
+    contents = <Login
+                  currentUser={props.currentUser}
+                  onLoginUser={props.onLoginUser}/>;
+  }
+  if(props.currentView === "accountoptions")
+  {
+    contents = <AccountOptions
+                  onChangeViewClicked={props.onChangeViewClicked}/>;
+  }
+  if(props.currentView === "session")
+  {
+    contents = <Session
+                  onChangeViewClicked={props.onChangeViewClicked}/>;
+  }
+  if(props.currentView === "records")
+  {
+    contents = <Records
+                  onChangeViewClicked={props.onChangeViewClicked}/>;
+  }
+
+  return (
+    <div>
+      <h1>MyTime Account</h1>
+      {contents}
+    </div>
+  )
 }
 
 Account.propTypes = {
   currentUser: PropTypes.object,
   currentView: PropTypes.string,
   onLoginUser: PropTypes.func,
-  onSessionViewClicked: PropTypes.func
+  onChangeViewClicked: PropTypes.func
 };

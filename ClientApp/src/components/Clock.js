@@ -11,7 +11,6 @@ class Clock extends React.Component
     this.intervalID = setInterval(() =>
     this.count(), 1000);
   }
-
   componentWillUnmount() {
     clearInterval(this.intervalID);
   }

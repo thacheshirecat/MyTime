@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-export default function Records(props) {
+export default function Records(props)
+{
+  function optionsViewClicked()
+  {
+    props.onChangeViewClicked("accountoptions");
+  }
 
+  return(
+    <div>
+      <button onClick={optionsViewClicked}>Back</button>
+    </div>
+  )
 }
 
 Records.propTypes = {
+  onChangeViewClicked: PropTypes.func
 };

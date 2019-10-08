@@ -3,13 +3,22 @@ import PropTypes from 'prop-types';
 
 import Clock from './Clock';
 
-export default function Session(props) {
+export default function Session(props)
+{
 
-return (
-  <Clock/>
-)
+  function optionsViewClicked()
+  {
+    props.onChangeViewClicked("accountoptions");
+  }
 
+  return (
+    <div>
+      <Clock/>
+      <button onClick={optionsViewClicked}>Back</button>
+    </div>
+  )
 }
 
 Session.propTypes = {
+  onChangeViewClicked: PropTypes.func
 };
