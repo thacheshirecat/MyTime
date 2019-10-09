@@ -14,7 +14,7 @@ namespace MyTime.Models
     private string _email;
     private string _sessionstartdate;
     private string _normalizedstarttime;
-    private int _sessionstarttime;
+    private string _sessionstarttime;
     private int _userid;
     //Getters
     public string getUserName()
@@ -37,7 +37,7 @@ namespace MyTime.Models
     {
       return _normalizedstarttime;
     }
-    public int getSessionStartTime()
+    public string getSessionStartTime()
     {
       return _sessionstarttime;
     }
@@ -66,7 +66,7 @@ namespace MyTime.Models
     {
       _normalizedstarttime = NewNormalizedStartTime;
     }
-    public void setSessionStartTime(int NewSessionStartTime)
+    public void setSessionStartTime(string NewSessionStartTime)
     {
       _sessionstarttime = NewSessionStartTime;
     }
@@ -75,7 +75,7 @@ namespace MyTime.Models
       _userid = NewUserId;
     }
     //Constructor
-    public MTUser(string UserName, string Password, string Email, string SessionStartDate, string NormalizedStartTime, int SessionStartTime, int UserId)
+    public MTUser(string UserName, string Password, string Email, string SessionStartDate, string NormalizedStartTime, string SessionStartTime, int UserId)
     {
       _username = UserName;
       _password = Password;
@@ -92,10 +92,13 @@ namespace MyTime.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO users(user_name, password, email) VALUES (@inputUser, @inputPass, @inputE);";
+      cmd.CommandText = @"INSERT INTO users(user_name, password, email, ssd, nst, sst) VALUES (@inputUser, @inputPass, @inputE, @ssd, @nst, @sst);";
       cmd.Parameters.Add(new MySqlParameter("@inputUser", inputUserName));
       cmd.Parameters.Add(new MySqlParameter("@inputPass", inputPassword));
       cmd.Parameters.Add(new MySqlParameter("@inputE", inputEmail));
+      cmd.Parameters.Add(new MySqlParameter("@ssd", "0"));
+      cmd.Parameters.Add(new MySqlParameter("@nst", "0"));
+      cmd.Parameters.Add(new MySqlParameter("@sst", "0"));
       cmd.ExecuteNonQuery();
 
       conn.Close();
@@ -120,7 +123,7 @@ namespace MyTime.Models
       string email = null;
       string ssd = null;
       string nsd = null;
-      int sst = 0;
+      string sst = null;
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
       {
@@ -130,7 +133,7 @@ namespace MyTime.Models
         email = rdr.GetString(3);
         ssd = rdr.GetString(4);
         nsd = rdr.GetString(5);
-        sst = rdr.GetInt32(6);
+        sst = rdr.GetString(6);
       }
       MTUser foundUser = new MTUser(foundUserName, password, email, ssd, nsd, sst, userId);
 

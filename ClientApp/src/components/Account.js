@@ -24,7 +24,9 @@ export default function Account(props)
   if(props.currentView === "session")
   {
     contents = <Session
-                  onChangeViewClicked={props.onChangeViewClicked}/>;
+                  onChangeViewClicked={props.onChangeViewClicked}
+                  currentUser={props.currentUser}
+                  onSessionStart={props.onSessionStart}/>;
   }
   if(props.currentView === "records")
   {
@@ -44,5 +46,6 @@ Account.propTypes = {
   currentUser: PropTypes.object,
   currentView: PropTypes.string,
   onLoginUser: PropTypes.func,
-  onChangeViewClicked: PropTypes.func
+  onChangeViewClicked: PropTypes.func,
+  onSessionStart: PropTypes.func
 };

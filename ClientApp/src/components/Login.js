@@ -32,6 +32,7 @@ export default function Login(props)
     else
     {
       console.log("Login Successful!");
+      console.log(props.currentUser);
       loginMessage = <p>Login Successful!</p>;
     }
   }

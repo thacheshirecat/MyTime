@@ -21,7 +21,7 @@ class Clock extends React.Component
 
   render() {
     return (
-      <p>It has been {this.state.currenttime} hours.</p>
+      <h1>It has been {this.state.currenttime} hours.</h1>
     )
   }
 
