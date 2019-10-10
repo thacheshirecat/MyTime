@@ -28,7 +28,6 @@ namespace MyTime.Controllers
     [HttpPost("[action]")]
     public IDictionary<string, string> UserLogin([FromBody] MTUser data)
     {
-      Console.WriteLine("************" + data);
       int verifiedUser = MTUser.verifyUserLogin(data.getUserName(), data.getPassword());
       IDictionary<string, string> user = new Dictionary<string, string>();
       if(verifiedUser == 3)
@@ -54,33 +53,6 @@ namespace MyTime.Controllers
         user.Add(new KeyValuePair<string, string>("userid", erroruser.getUserId().ToString()));
       }
       return user;
-    }
-
-    [HttpPost("[action]")]
-    public IDictionary<string, string> StartSession([FromBody] MTUser data)
-    {
-      Console.WriteLine("************" + data);
-      MTUser founduser = MTUser.getUserByName(data.getUserName());
-      founduser.setSessionStartDate(data.getSessionStartDate());
-      founduser.setNormalizedStartTime(data.getNormalizedStartTime());
-      founduser.setSessionStartTime(data.getSessionStartTime());
-
-      IDictionary<string, string> user = new Dictionary<string, string>();
-      user.Add(new KeyValuePair<string, string>("username", founduser.getUserName()));
-      user.Add(new KeyValuePair<string, string>("password", founduser.getPassword()));
-      user.Add(new KeyValuePair<string, string>("email", founduser.getEmail()));
-      user.Add(new KeyValuePair<string, string>("sessionstartdate", founduser.getSessionStartDate()));
-      user.Add(new KeyValuePair<string, string>("normalizedstarttime", founduser.getNormalizedStartTime()));
-      user.Add(new KeyValuePair<string, string>("sessionstarttime", founduser.getSessionStartTime()));
-      user.Add(new KeyValuePair<string, string>("userid", founduser.getUserId().ToString()));
-
-      return user;
-    }
-
-    [HttpPost("[action]")]
-    public void ApiTest([FromBody] MTUser data)
-    {
-      Console.WriteLine("************" + data);
     }
   }
 }

@@ -26,13 +26,10 @@ export default function Login(props)
   {
     if(props.currentUser.userid === "0" || props.currentUser.userid === null)
     {
-      console.log("Error");
       loginMessage = errorText();
     }
     else
     {
-      console.log("Login Successful!");
-      console.log(props.currentUser);
       loginMessage = <p>Login Successful!</p>;
     }
   }
