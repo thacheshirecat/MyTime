@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 
+import './App.css';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import Account from './components/Account';
@@ -62,42 +63,16 @@ export default class App extends Component {
       }
     });
   }
-  //The number being used to accurately keep time is too large to send via API as it stands.
   handleSessionStart(user)
   {
-    // let data = JSON.stringify({userName: user.userName,
-    //                           password: this.state.currentUser.password,
-    //                           email: this.state.currentUser.email,
-    //                           sessionStartDate: user.sessionStartDate,
-    //                           normalizedStartTime: user.normalizedStartTime,
-    //                           sessionStartTime: user.sessionStartTime,
-    //                           userId: this.state.currentUser.userid});
-    //
-    // console.log("data = " + data);
-    // fetch('api/Login/StartSession',
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       'Accept': 'application/json, text/plain',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: data
-    //   }).then(response => response.json())
-    //     .then(newdata => {
-    //   console.log("new data = " + newdata);
-    //   this.setState({currentUser: newdata});
-    // });
-    let stringstart = user.sessionStartTime.toString();
-    console.log("int: " + user.sessionStartTime + " and string: " + stringstart);
     let data = JSON.stringify({userName: user.userName,
                               password: this.state.currentUser.password,
                               email: this.state.currentUser.email,
                               sessionStartDate: user.sessionStartDate,
                               normalizedStartTime: user.normalizedStartTime,
-                              sessionStartTime: stringstart,
+                              sessionStartTime: user.sessionStartTime,
                               userId: this.state.currentUser.userid});
-    console.log("data = " + data);
-    fetch('api/Login/ApiTest',
+    fetch('api/Session/StartSession',
       {
         method: 'POST',
         headers: {
@@ -107,7 +82,7 @@ export default class App extends Component {
         body: data
       }).then(response => response.json())
         .then(newdata => {
-          console.log(newdata);
+          this.setState({currentUser: newdata});
     });
 
   }

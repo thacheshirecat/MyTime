@@ -13,11 +13,12 @@ namespace MyTime.Controllers
     [HttpPost("[action]")]
     public IDictionary<string, string> StartSession([FromBody] MTUser data)
     {
-      Console.WriteLine("************" + data);
       MTUser founduser = MTUser.getUserByName(data.getUserName());
       founduser.setSessionStartDate(data.getSessionStartDate());
       founduser.setNormalizedStartTime(data.getNormalizedStartTime());
       founduser.setSessionStartTime(data.getSessionStartTime());
+
+      MTUser.startNewSession(founduser.getUserId(), founduser.getSessionStartDate(), founduser.getNormalizedStartTime(), founduser.getSessionStartTime());
 
       IDictionary<string, string> user = new Dictionary<string, string>();
       user.Add(new KeyValuePair<string, string>("username", founduser.getUserName()));

@@ -122,7 +122,7 @@ namespace MyTime.Models
       string password = null;
       string email = null;
       string ssd = null;
-      string nsd = null;
+      string nst = null;
       string sst = null;
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       while(rdr.Read())
@@ -132,10 +132,10 @@ namespace MyTime.Models
         password = rdr.GetString(2);
         email = rdr.GetString(3);
         ssd = rdr.GetString(4);
-        nsd = rdr.GetString(5);
+        nst = rdr.GetString(5);
         sst = rdr.GetString(6);
       }
-      MTUser foundUser = new MTUser(foundUserName, password, email, ssd, nsd, sst, userId);
+      MTUser foundUser = new MTUser(foundUserName, password, email, ssd, nst, sst, userId);
 
       conn.Close();
       if (conn != null)
@@ -179,6 +179,25 @@ namespace MyTime.Models
       else
       {
         return 3;
+      }
+    }
+    public static void startNewSession(int userId, string sessionStartDate, string normalizedStartTime, string sessionStartTime)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE users SET session_start_date = (@ssd), normalized_start_time = (@nst), session_start_time = (@sst) WHERE id = (@userId);";
+      cmd.Parameters.Add(new MySqlParameter("@userId", userId));
+      cmd.Parameters.Add(new MySqlParameter("@ssd", sessionStartDate));
+      cmd.Parameters.Add(new MySqlParameter("@nst", normalizedStartTime));
+      cmd.Parameters.Add(new MySqlParameter("@sst", sessionStartTime));
+      cmd.ExecuteNonQuery();
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
       }
     }
   }

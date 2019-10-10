@@ -4,10 +4,11 @@ class Clock extends React.Component
 {
   constructor(props) {
     super(props);
-    this.state = { time: new Date().getTime(), currenttime: 0 };
+    this.state = { time: parseInt(props.currentUser.sessionstarttime, 10), currenttime: 0 };
   }
 
   componentDidMount() {
+    this.setState({ currenttime: (Math.floor((new Date().getTime() - this.state.time)/1000)/3600).toFixed(3)});
     this.intervalID = setInterval(() =>
     this.count(), 1000);
   }
@@ -21,7 +22,10 @@ class Clock extends React.Component
 
   render() {
     return (
-      <h1>It has been {this.state.currenttime} hours.</h1>
+      <div>
+        <h1>Session started {this.props.currentUser.sessionstartdate} at {this.props.currentUser.normalizedstarttime}</h1>
+        <h1>Elapsed Time: {this.state.currenttime} hours.</h1>
+      </div>
     )
   }
 
